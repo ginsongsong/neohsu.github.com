@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Octopress | Learn Or Die]]></title>
+  <link href="http://NeoHsu.github.io/blog/categories/octopress/atom.xml" rel="self"/>
+  <link href="http://NeoHsu.github.io/"/>
+  <updated>2013-11-26T22:54:10+08:00</updated>
+  <id>http://NeoHsu.github.io/</id>
+  <author>
+    <name><![CDATA[Neo Hsu]]></name>
+    <email><![CDATA[NeoHsuDroid@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How to Install Octopress on Ubuntu]]></title>
+    <link href="http://NeoHsu.github.io/blog/2011/11/24/how-to-install-octopress-on-ubuntu/"/>
+    <updated>2011-11-24T01:54:00+08:00</updated>
+    <id>http://NeoHsu.github.io/blog/2011/11/24/how-to-install-octopress-on-ubuntu</id>
+    <content type="html"><![CDATA[<h1>Development environment</h1>
+
+<ul>
+<li>Ubuntu 11.10 (64 bit)</li>
+<li>Dell Studio XPS 1640</li>
+</ul>
+
+
+<p></p>
+
+
+<h1>Installation steps</h1>
+
+<ol>
+<li>Basic components</li>
+<li>Git</li>
+<li>RVM + Bundler</li>
+<li>Octopress</li>
+</ol>
+
+
+<p></p>
+
+
+<h1>Install basic components</h1>
+
+<p><div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>sudo aptitude install bash curl build-essential bison openssl <br>libreadline6 libreadline6-dev zlib1g zlib1g-dev libssl-dev <br>libyaml-dev libsqlite3-0 libsqlite3-dev sqlite3 libxml2-dev <br>libxslt-dev autoconf libc6-dev ncurses-dev automake</span></code></pre></td></tr></table></div></div>
+        </div></p>
+
+<h1>Install Git</h1>
+
+<p>安裝Git並下載最新版本來重新編譯<br/>
+build-dep : 會替你安裝build 所需要的所有package
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>sudo aptitude build-dep git-core</span><span class='line command'>wget <a href="http://git-core.googlecode.com/files/git-1.7.7.2.tar.gz">http://git-core.googlecode.com/files/git-1.7.7.2.tar.gz</a></span><span class='line command'>tar xvzf git-1.7.7.2.tar.gz</span><span class='line command'>cd git-1.7.7.2/</span><span class='line command'>./configure</span><span class='line command'>make</span><span class='line command'>sudo make install</span></code></pre></td></tr></table></div></div>
+        </div></p>
+
+<h1>Install RVM &amp; Bundler</h1>
+
+<p>Bundler : 用來管理Ruby程式
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>bash &lt; &lt;(curl -s <a href="https://rvm.beginrescueend.com/install/rvm">https://rvm.beginrescueend.com/install/rvm</a>)</span><span class='line command'>echo &lsquo;[[ -s &ldquo;$HOME/.rvm/scripts/rvm&rdquo; ]] &amp;&amp; . &ldquo;$HOME/.rvm/scripts/rvm&rdquo; # Load RVM function&rsquo; >> ~/.bash_profile</span><span class='line command'>source .bash_profile</span><span class='line command'>rvm pkg install openssl</span><span class='line command'>rvm pkg install iconv</span><span class='line command'>rvm install 1.9.2 -C &mdash;with-openssl-dir=$HOME/.rvm/usr,&mdash;with-iconv-dir=$HOME/.rvm/usr</span><span class='line command'>rvm use 1.9.2 &mdash;default</span><span class='line command'>rvm reload</span><span class='line command'>rvm rubygems latest</span><span class='line command'>gem install bundler</span></code></pre></td></tr></table></div></div>
+        </div></p>
+
+<h1>Install Octopress</h1>
+
+<p><div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>git clone git://github.com/imathis/octopress.git octopress</span><span class='line command'>cd octopress</span><span class='line command'>bundle install</span><span class='line command'>rake install</span></code></pre></td></tr></table></div></div>
+        </div></p>
+]]></content>
+  </entry>
+  
+</feed>

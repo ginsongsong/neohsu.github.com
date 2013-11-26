@@ -9,8 +9,8 @@
 	<meta name="author" content="Neo Hsu">
 
 	
-	<meta name="description" content=" Blog Archives
-">
+	<meta name="description" content="Nov 27th, 2011 bash, environment, profile, ubuntu Environment Variable on Ubuntu Profile &amp; Environment Difference /etc/profile 是設定所有使用者環境變數的檔案
+/ &hellip;">
 	
 
   <!-- http://t.co/dKP3o1e -->
@@ -100,6 +100,753 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-27T17:37:00+08:00" data-updated="true" itemprop="datePublished">Nov 27<span>th</span>, 2011</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/bash/'>bash</a>, <a class='category' href='/blog/categories/environment/'>environment</a>, <a class='category' href='/blog/categories/profile/'>profile</a>, <a class='category' href='/blog/categories/ubuntu/'>ubuntu</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/blog/2011/11/27/environment-variable-on-ubuntu/" itemprop="url">Environment Variable on Ubuntu</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<h1>Profile &amp; Environment Difference</h1>
+
+<ul>
+<li>/etc/profile 是設定所有使用者環境變數的檔案</li>
+<li>/etc/environment 是設定本機系统環境變數的檔案</li>
+</ul>
+
+
+<p>當進入登入畫面時，系統先取得 environment 裡的環境變數執行</p>
+
+<pre><code>/etc/environment
+</code></pre>
+
+<p>當登錄系統時 shell 讀取環境變數的順序是 :</p>
+
+<pre><code>/etc/profile -&gt; /etc/environment -&gt; $HOME/.profile 
+</code></pre>
+
+<h4>如果同一個環境變數在使用者環境變數( /etc/profile )和系统環境變數( /etc/environment )有不同的值那應該以使用者的環境變數為主</h4>
+
+<p></p>
+
+
+<h1>Environment Variable Document Difference</h1>
+
+<ol>
+<li><h4>/etc/profile :</h4>
+
+<p>此文件為系統的每個用戶設置環境信息，當用戶第一次登錄時，該文件被執行，並從 /etc/profile.d 目錄的配置文件中蒐集 shell 的設置</p></li>
+<li><h4>/etc/bashrc :</h4>
+
+<p>此文件為每一個運行 bash shell 的用戶執行此文件，當 bash shell 被打開時，該文件被讀入</p></li>
+<li><h4>~/.bash_profile :</h4>
+
+<p>每個用戶都可使用該文件輸入專用於自己使用的 shell 信息，當用戶登錄時，該文件僅僅執行一次，默認情況下，他設置一些環境變數，執行用戶的 .bashrc 文件</p></li>
+<li><h4>~/.bashrc :</h4>
+
+<p>此文件包含專用於使用者的 bash shell 的 bash 信息，當登錄時以及每次打開新的 shell 時，則該文件被讀取</p></li>
+<li><h4>~/.bash_logout :</h4>
+
+<p>當每次退出系統(退出bash shell)時，執行該文件，另外 /etc/profile 中設定的變數可以作用於任何用戶，而 ~/.bashrc 等中設定的變數只能繼承 /etc/profile 中的變數，他們是父子關係</p></li>
+<li><h4>~/.bash_profile :</h4>
+
+<p>此文件是交互式 login 方式進入 bash 運行的， ~/.bashrc 是交互式 non-login 方式進入 bash 運行的通常二者設置大致相同，所以通常前者會調用後者</p></li>
+</ol>
+
+
+<p></p>
+
+
+<h1>Conclusion</h1>
+
+<p>環境變數盡量不要設定在 environment 檔裡面，主要原因為 environment 檔為系統環境主要設定檔案，因此如果發生錯誤可能會造成系統死當，如果設定為所有使用者皆使用的環境變數，應設定在 profile 檔裡面，如果個別使用者要使用的環境變數則設定在 .bashrc 較為恰當</p>
+
+<figure class='code'><figcaption><span>Example </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>JAVA SDK 環境變數 -> /etc/profile 
+</span><span class='line'>Android SDK -> ~/.bashrc
+</span><span class='line'>Android NDK -> ~/.bashrc</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-27T15:10:00+08:00" data-updated="true" itemprop="datePublished">Nov 27<span>th</span>, 2011</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/java/'>JAVA</a>, <a class='category' href='/blog/categories/jre/'>JRE</a>, <a class='category' href='/blog/categories/ubuntu/'>ubuntu</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/blog/2011/11/27/how-to-install-sun-jre-6-on-ubuntu/" itemprop="url">How to Install Sun JRE 6 on Ubuntu</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<h1>Outline</h1>
+
+<ul>
+<li>JRE 是建置 JAVA 執行環境的軟體</li>
+<li>JRE 的內部有一個 Java 虛擬機器（JVM）以及一些標準的類別函數庫，協助 Java 程式運作</li>
+<li>JRE 只能運行 JAVA 程式，無法開發 JAVA 程式</li>
+</ul>
+
+
+<p></p>
+
+
+<h1>Development environment</h1>
+
+<ul>
+<li>Ubuntu 11.10 (x86-64)</li>
+<li>Dell Studio XPS 1640</li>
+</ul>
+
+
+<p></p>
+
+
+<h1>Method 1: Install a package by a PPA</h1>
+
+<p>1.加入新的的PPA來源</p>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span>
+<span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>sudo add-apt-repository ppa:ferramroberto/java</span><span class='line command'>sudo aptitude update</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<p>2.Install Sun JRE &amp; Java Plugin</p>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>sudo aptitude install sun-java6-jre sun-java6-Plugin sun-java6-fonts</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<h1>Method 2: Installing the JRE manually</h1>
+
+<p>1.建立你要安裝的目錄並到該目錄下</p>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span>
+<span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>mkdir -p ~/programs</span><span class='line command'>cd ~/programs</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<p>2.Downloading JRE from the <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Oracle Web site </a>,The file is bin file.</p>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>wget http://download.oracle.com/otn-pub/java/jdk/6u29-b11/jre-6u29-linux-x64.bin</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<p>3.將下載的 JRE 設定為可執行的檔案並安裝</p>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span>
+<span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>chmod +x jre-6u29-linux-x64.bin</span><span class='line command'>./jre-6u29-linux-x64.bin</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<p>執行完後會在目錄下建立一個資料夾（jre1.6.0）這個資料夾是你安裝 JRE 的路徑</p>
+
+<p>4.在 /etc/profile 檔案中設定環境變數</p>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>sudo vim /etc/profile</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<p>在設定環境變數的檔案中加入下面參數</p>
+
+<figure class='code'><figcaption><span>profile </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>export JAVA_HOME="/home/simonhsu/programs/jre1.6.0_29"
+</span><span class='line'>export CLASSPATH=.:/JAVA_HOME/lib
+</span><span class='line'>export PATH=$PATH:$JAVA_HOME/bin</span></code></pre></td></tr></table></div></figure>
+
+
+<p>5.重新載入 /etc/profile 並重新開機</p>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span>
+<span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>sudo source /etc/profile</span><span class='line command'>sudo init 6</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<h4>These are the steps to install a JRE on your system.</h4>
+
+<p></p>
+
+
+<h1>If you need installed plugin to browser:</h1>
+
+<h4>Firefox:</h4>
+
+<p>1.建立瀏覽器的 Plugin 資料夾</p>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>mkdir -p ~/.mozilla/plugins</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<p>2.建立Plugin的連結</p>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>ln -s ~/programs/jre1.6.0_29/lib/amd64/libnpjp2.so ~/.mozilla/plugins/</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<h4>Chrome:</h4>
+
+<p>1.建立Chrome瀏覽器的 Plugin 資料夾</p>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>mkdir -p /opt/google/chrome/plugins</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<p>2.建立Plugin的連結</p>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>ln -s ~/programs/jre1.6.0_29/lib/amd64/libnpjp2.so /opt/google/chrome/plugins</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<h1>Test JRE &amp; Plugin</h1>
+
+<blockquote><p>Test Java Runtime Environment</p></blockquote>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span>
+<span class='line-number'>&nbsp;</span>
+<span class='line-number'>&nbsp;</span>
+<span class='line-number'>&nbsp;</span></pre></td><td class='code'><pre><code><span class='line command'>java -version</span><span class='line output'>java version "1.6.0_29"
+</span><span class='line output'>Java(TM) SE Runtime Environment (build 1.6.0_29-b11)
+</span><span class='line output'>Java HotSpot(TM) 64-Bit Server VM (build 20.4-b02, mixed mode)</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<blockquote><p>Test Browser Plugin</p></blockquote>
+
+<p>Go <a href="http://java.com/en/download/testjava.jsp">How do I test whether Java is working on my computer?</a> website can test JRE Plugin</p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-27T00:52:00+08:00" data-updated="true" itemprop="datePublished">Nov 27<span>th</span>, 2011</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/java/'>JAVA</a>, <a class='category' href='/blog/categories/jdk/'>JDK</a>, <a class='category' href='/blog/categories/ubuntu/'>ubuntu</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/blog/2011/11/27/how-to-install-sun-jdk-6-on-ubuntu/" itemprop="url">How to Install Sun JDK 6 on Ubuntu</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<h1>Outline</h1>
+
+<ul>
+<li>JDK 提供開發人員的軟體開發工具並建置編譯與執行 JAVA 的開發環境</li>
+<li>JDK 包含了 JAVA 開發工具外，還包含了 JRE 和 JVM</li>
+<li>JDK 可以開發與運行 JAVA 程式</li>
+</ul>
+
+
+<p></p>
+
+
+<h1>Development environment</h1>
+
+<ul>
+<li>Ubuntu 11.10 (x86-64)</li>
+<li>Dell Studio XPS 1640</li>
+</ul>
+
+
+<p></p>
+
+
+<h1>Method 1: Install a package by a PPA</h1>
+
+<p>1.加入新的的PPA來源</p>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span>
+<span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>sudo add-apt-repository ppa:ferramroberto/java</span><span class='line command'>sudo aptitude update</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<p>2.Install Sun JDK &amp; Java Plugin</p>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>sudo aptitude install sun-java6-jdk sun-java6-plugin sun-java6-fonts</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<h1>Method 2: Installing the JDK manually</h1>
+
+<p>1.建立你的安裝的目錄並到該目錄下</p>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span>
+<span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>mkdir -p ~/programs</span><span class='line command'>cd ~/programs</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<p>2.Downloading JDK from the <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Oracle Web site </a>,The file is bin file.</p>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>wget http://download.oracle.com/otn-pub/java/jdk/6u29-b11/jdk-6u29-linux-x64.bin</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<p>3.將下載的 JDK 設定為可執行檔案並安裝</p>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span>
+<span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>chmod +x jdk-6u29-linux-x64.bin</span><span class='line command'>./jdk-6u29-linux-x64.bin</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<p>執行完後會在目錄下建立一個資料夾（jdk1.6.0）這個資料夾是你安裝 JDK 的路徑</p>
+
+<p>4.在 /etc/profile 檔案中設定環境變數</p>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>sudo vim /etc/profile</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<p>在設定環境變數的檔案中加入下面參數</p>
+
+<figure class='code'><figcaption><span>profile </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>export JAVA_HOME="/home/simonhsu/programs/jdk1.6.0_29"
+</span><span class='line'>export CLASSPATH=.:/JAVA_HOME/lib
+</span><span class='line'>export PATH=$PATH:$JAVA_HOME/bin</span></code></pre></td></tr></table></div></figure>
+
+
+<p>5.重新載入 /etc/profile 並重新開機</p>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span>
+<span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>sudo source /etc/profile</span><span class='line command'>sudo init 6</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<h4>These are the steps to install a JDK on your system.</h4>
+
+<p></p>
+
+
+<h1>If you need installed the plugin to browser:</h1>
+
+<h4>Firefox:</h4>
+
+<p>1.建立瀏覽器的 Plugin 資料夾</p>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>mkdir -p ~/.mozilla/plugins</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<p>2.建立Plugin的連結</p>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>ln -s ~/programs/jdk1.6.0_29/jre/lib/amd64/libnpjp2.so ~/.mozilla/plugins/</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<h4>Chrome:</h4>
+
+<p>1.建立Chrome瀏覽器的 Plugin 資料夾</p>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>mkdir -p /opt/google/chrome/plugins</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<p>2.建立Plugin的連結</p>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>ln -s ~/programs/jdk1.6.0_29/jre/lib/amd64/libnpjp2.so /opt/google/chrome/plugins</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<h1>Test JDK &amp; Plugin</h1>
+
+<blockquote><p>Test Java Development Kit</p></blockquote>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span>
+<span class='line-number'>&nbsp;</span>
+<span class='line-number'>&nbsp;</span>
+<span class='line-number'>&nbsp;</span>
+<span class='line-number'>&nbsp;</span>
+<span class='line-number'>$</span>
+<span class='line-number'>&nbsp;</span></pre></td><td class='code'><pre><code><span class='line command'>java -version</span><span class='line output'>java version "1.6.0_29"
+</span><span class='line output'>Java(TM) SE Runtime Environment (build 1.6.0_29-b11)
+</span><span class='line output'>Java HotSpot(TM) 64-Bit Server VM (build 20.4-b02, mixed mode)
+</span><span class='line output'>
+</span><span class='line command'>javac -version</span><span class='line output'>javac 1.6.0_29</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<blockquote><p>Test Browser Plugin</p></blockquote>
+
+<p>Go <a href="http://java.com/en/download/testjava.jsp">How do I test whether Java is working on my computer?</a> website can test JDK Plugin</p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-24T01:54:00+08:00" data-updated="true" itemprop="datePublished">Nov 24<span>th</span>, 2011</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/octopress/'>Octopress</a>, <a class='category' href='/blog/categories/ubuntu/'>ubuntu</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/blog/2011/11/24/how-to-install-octopress-on-ubuntu/" itemprop="url">How to Install Octopress on Ubuntu</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<h1>Development environment</h1>
+
+<ul>
+<li>Ubuntu 11.10 (64 bit)</li>
+<li>Dell Studio XPS 1640</li>
+</ul>
+
+
+<p></p>
+
+
+<h1>Installation steps</h1>
+
+<ol>
+<li>Basic components</li>
+<li>Git</li>
+<li>RVM + Bundler</li>
+<li>Octopress</li>
+</ol>
+
+
+<p></p>
+
+
+<h1>Install basic components</h1>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>sudo aptitude install bash curl build-essential bison openssl <br>libreadline6 libreadline6-dev zlib1g zlib1g-dev libssl-dev <br>libyaml-dev libsqlite3-0 libsqlite3-dev sqlite3 libxml2-dev <br>libxslt-dev autoconf libc6-dev ncurses-dev automake</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<h1>Install Git</h1>
+
+<p>安裝Git並下載最新版本來重新編譯<br/>
+build-dep : 會替你安裝build 所需要的所有package</p>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>sudo aptitude build-dep git-core</span><span class='line command'>wget http://git-core.googlecode.com/files/git-1.7.7.2.tar.gz</span><span class='line command'>tar xvzf git-1.7.7.2.tar.gz</span><span class='line command'>cd git-1.7.7.2/</span><span class='line command'>./configure</span><span class='line command'>make</span><span class='line command'>sudo make install</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<h1>Install RVM &amp; Bundler</h1>
+
+<p>Bundler : 用來管理Ruby程式</p>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>bash < <(curl -s https://rvm.beginrescueend.com/install/rvm)</span><span class='line command'>echo '[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" # Load RVM function' >> ~/.bash_profile</span><span class='line command'>source .bash_profile</span><span class='line command'>rvm pkg install openssl</span><span class='line command'>rvm pkg install iconv</span><span class='line command'>rvm install 1.9.2 -C --with-openssl-dir=$HOME/.rvm/usr,--with-iconv-dir=$HOME/.rvm/usr</span><span class='line command'>rvm use 1.9.2 --default</span><span class='line command'>rvm reload</span><span class='line command'>rvm rubygems latest</span><span class='line command'>gem install bundler</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<h1>Install Octopress</h1>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>git clone git://github.com/imathis/octopress.git octopress</span><span class='line command'>cd octopress</span><span class='line command'>bundle install</span><span class='line command'>rake install</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+
+
+		
+		
+	</div>
+
+</article>
 
 </div>
 <nav id="pagenavi">
