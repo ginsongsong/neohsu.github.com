@@ -5,11 +5,12 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Category: JDK - Learn Or Die</title>
+	<title>Tag cloud for Octopress - Learn Or Die</title>
 	<meta name="author" content="Neo Hsu">
 
 	
-	<meta name="description" content="Category: JDK">
+	<meta name="description" content="Tag Cloud for Octopress Octopress的預設畫面沒有將分類標籤獨立出來，讓搜尋文章類別很不方便，因此標籤雲這東西就相對的重要，網路上找了一下相關的plugin，以下說明一下安裝與設定過程。 Installation steps Download plugin
+Move &hellip;">
 	
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +20,7 @@
 
 	<link href="/atom.xml" rel="alternate" title="Learn Or Die" type="application/atom+xml">
 	
-	<link rel="canonical" href="http://NeoHsu.github.ioblog/categories/jdk/">
+	<link rel="canonical" href="http://NeoHsu.github.io/blog/2012/06/27/tag-cloud-for-octopress/">
 	<link href="/favicon.png" rel="shortcut icon">
 	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
 	<link href="/stylesheets/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
@@ -95,29 +96,105 @@
 				
 			
 			<div class="mid-col-container">
-				<div id="content" class="inner">
-	
+				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	<h1 class="title" itemprop="name">Tag Cloud for Octopress</h1>
+	<div class="entry-content" itemprop="articleBody"><p>Octopress的預設畫面沒有將分類標籤獨立出來，讓搜尋文章類別很不方便，因此標籤雲這東西就相對的重要，網路上找了一下相關的plugin，以下說明一下安裝與設定過程。</p>
+
+<h1>Installation steps</h1>
+
+<ol>
+<li>Download plugin</li>
+<li>Move file</li>
+<li>Edit config</li>
+<li>Compile octopress</li>
+</ol>
 
 
-	
-	
-	<section class="archives"><h1 class="year">2011</h1>
-
-<article itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<span class="date"><time datetime="2011-11-27T00:52:00+08:00" itemprop="datePublished">Nov 27</time></span>
-		<br>
-		<span class="tags">
+<p></p>
 
 
-	<a class='category' href='/blog/categories/java/'>JAVA</a>, <a class='category' href='/blog/categories/jdk/'>JDK</a>, <a class='category' href='/blog/categories/ubuntu/'>ubuntu</a>
+<h1>Download plugin</h1>
+
+<ol>
+<li>下載Plugin相關檔案
+<a href="https://github.com/tokkonopapa/octopress-tagcloud">GitHub &ndash; tokkonopapa/octopress-tagcloud</a></li>
+<li>Plugin相關檔案</li>
+</ol>
 
 
-</span>
-	    
-	</div>
-	<h1 class="title" itemprop="name"><a href="/blog/2011/11/27/how-to-install-sun-jdk-6-on-ubuntu/">How to Install Sun JDK 6 On Ubuntu</a></h1>
+<pre><code>.
+├─ plugins/
+│  └── tag_cloud.rb  Plugin主程式(抓取文章中的類別並丟入設定的模板中)
+└─ source/
+   └─ _includes/
+      └─ custom/
+         └─ asides/
+            ├─ category_list.html 分類標籤列表模板
+            └─ tag_cloud.html     分類標籤雲模板
+</code></pre>
+
+
+<p></p>
+
+
+<h1>Move file</h1>
+
+<p>將檔案移動到Octopress對應的位置</p>
+
+<p></p>
+
+
+<h1>Edit config</h1>
+
+<ol>
+<li>編輯_config.yml<br/>
+default_asides 是設定Blog側邊欄所要放置的模板，我選擇了tag_cloud.html去作類別的顯示。</li>
+</ol>
+
+
+<pre><code>
+# To add custom asides, create files in /source/_includes/custom/asides/
+and add them to the list like 'custom/asides/custom_aside_name.html'
+default_asides: 
+[<font color="#F62217">custom/asides/tag_cloud.html</font>,
+asides/recent_posts.html, asides/github.html, asides/twitter.html,
+asides/delicious.html, asides/pinboard.html, asides/googleplus.html]</code></pre>
+
+
+<p></p>
+
+
+<h1>Compile octopress</h1>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span>
+<span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>rake generate</span><span class='line command'>rake preview</span></code></pre></td></tr></table></div></div>
+        </div>
+
+</div>
+
 </article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
 
 </div>
 			</div>

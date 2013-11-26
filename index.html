@@ -1,7 +1,7 @@
 
 <!DOCTYPE HTML>
 
-<html>
+<html lang="zh-tw">
 
 <head>
 	<meta charset="utf-8">
@@ -9,8 +9,7 @@
 	<meta name="author" content="Neo Hsu">
 
 	
-	<meta name="description" content="Nov 27th, 2011 bash, environment, profile, ubuntu Environment Variable on Ubuntu Profile &amp; Environment Difference /etc/profile 是設定所有使用者環境變數的檔案
-/ &hellip;">
+	<meta name="description" content="Jun 27th, 2012 Octopress Tag Cloud for Octopress Octopress的預設畫面沒有將分類標籤獨立出來，讓搜尋文章類別很不方便，因此標籤雲這東西就相對的重要，網路上找了一下相關的plugin，以下說明一下安裝與設定過程。 Installation &hellip;">
 	
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,11 +64,6 @@
 </nav>
 <nav id="sub-nav">
 	<div class="social">
-<!--
-		
-			<a class="email" href="mailto:NeoHsuDroid@gmail.com" title="Email">Email</a>
-		
--->
 		
 		
 			<a class="google" href="https://plus.google.com/107267680170741990949" rel="author" title="Google+">Google+</a>
@@ -89,6 +83,9 @@
 			<a class="rss" href="/atom.xml" title="RSS">RSS</a>
 		
 	</div>
+	<div>
+		<span id="tag-cloud"><a href='/blog/categories/bash' style='font-size: 115.0%'>bash(1)</a> <a href='/blog/categories/environment' style='font-size: 115.0%'>environment(1)</a> <a href='/blog/categories/java' style='font-size: 130.0%'>JAVA(2)</a> <a href='/blog/categories/jdk' style='font-size: 115.0%'>JDK(1)</a> <a href='/blog/categories/jre' style='font-size: 115.0%'>JRE(1)</a> <a href='/blog/categories/octopress' style='font-size: 130.0%'>Octopress(2)</a> <a href='/blog/categories/profile' style='font-size: 115.0%'>profile(1)</a> <a href='/blog/categories/ubuntu' style='font-size: 160.0%'>ubuntu(4)</a> </span>
+	</div>
 </nav>
 </header>				
 			</div>
@@ -100,6 +97,119 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-27T16:10:00+08:00" data-updated="true" itemprop="datePublished">Jun 27<span>th</span>, 2012</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/octopress/'>Octopress</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/blog/2012/06/27/tag-cloud-for-octopress/" itemprop="url">Tag Cloud for Octopress</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>Octopress的預設畫面沒有將分類標籤獨立出來，讓搜尋文章類別很不方便，因此標籤雲這東西就相對的重要，網路上找了一下相關的plugin，以下說明一下安裝與設定過程。</p>
+
+<h1>Installation steps</h1>
+
+<ol>
+<li>Download plugin</li>
+<li>Move file</li>
+<li>Edit config</li>
+<li>Compile octopress</li>
+</ol>
+
+
+<p></p>
+
+
+<h1>Download plugin</h1>
+
+<ol>
+<li>下載Plugin相關檔案
+<a href="https://github.com/tokkonopapa/octopress-tagcloud">GitHub &ndash; tokkonopapa/octopress-tagcloud</a></li>
+<li>Plugin相關檔案</li>
+</ol>
+
+
+<pre><code>.
+├─ plugins/
+│  └── tag_cloud.rb  Plugin主程式(抓取文章中的類別並丟入設定的模板中)
+└─ source/
+   └─ _includes/
+      └─ custom/
+         └─ asides/
+            ├─ category_list.html 分類標籤列表模板
+            └─ tag_cloud.html     分類標籤雲模板
+</code></pre>
+
+
+<p></p>
+
+
+<h1>Move file</h1>
+
+<p>將檔案移動到Octopress對應的位置</p>
+
+<p></p>
+
+
+<h1>Edit config</h1>
+
+<ol>
+<li>編輯_config.yml<br/>
+default_asides 是設定Blog側邊欄所要放置的模板，我選擇了tag_cloud.html去作類別的顯示。</li>
+</ol>
+
+
+<pre><code>
+# To add custom asides, create files in /source/_includes/custom/asides/
+and add them to the list like 'custom/asides/custom_aside_name.html'
+default_asides: 
+[<font color="#F62217">custom/asides/tag_cloud.html</font>,
+asides/recent_posts.html, asides/github.html, asides/twitter.html,
+asides/delicious.html, asides/pinboard.html, asides/googleplus.html]</code></pre>
+
+
+<p></p>
+
+
+<h1>Compile octopress</h1>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span>
+<span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>rake generate</span><span class='line command'>rake preview</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+		
+		
+	</div>
+
+</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
