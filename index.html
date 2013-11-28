@@ -9,7 +9,8 @@
 	<meta name="author" content="Neo Hsu">
 
 	
-	<meta name="description" content="Jun 27th, 2012 Octopress Tag Cloud for Octopress Octopress的預設畫面沒有將分類標籤獨立出來，讓搜尋文章類別很不方便，因此標籤雲這東西就相對的重要，網路上找了一下相關的plugin，以下說明一下安裝與設定過程。 Installation &hellip;">
+	<meta name="description" content="Nov 28th, 2013 Homebrew, Octopress Setup Octopress Under Mac OS X Outline 在 Mac 上建置 Octopress 環境撰寫 Blog
+安裝 Mac 的第三方套件庫 ( Homebrew ) 建置 Ruby 環境 &hellip;">
 	
 
   <!-- http://t.co/dKP3o1e -->
@@ -84,7 +85,7 @@
 		
 	</div>
 	<div>
-		<span id="tag-cloud"><a href='/blog/categories/bash' style='font-size: 115.0%'>bash(1)</a> <a href='/blog/categories/environment' style='font-size: 115.0%'>environment(1)</a> <a href='/blog/categories/java' style='font-size: 130.0%'>JAVA(2)</a> <a href='/blog/categories/jdk' style='font-size: 115.0%'>JDK(1)</a> <a href='/blog/categories/jre' style='font-size: 115.0%'>JRE(1)</a> <a href='/blog/categories/octopress' style='font-size: 130.0%'>Octopress(2)</a> <a href='/blog/categories/profile' style='font-size: 115.0%'>profile(1)</a> <a href='/blog/categories/ubuntu' style='font-size: 160.0%'>ubuntu(4)</a> </span>
+		<span id="tag-cloud"><a href='/blog/categories/bash' style='font-size: 115.0%'>bash(1)</a> <a href='/blog/categories/environment' style='font-size: 115.0%'>environment(1)</a> <a href='/blog/categories/homebrew' style='font-size: 115.0%'>Homebrew(1)</a> <a href='/blog/categories/java' style='font-size: 130.0%'>JAVA(2)</a> <a href='/blog/categories/jdk' style='font-size: 115.0%'>JDK(1)</a> <a href='/blog/categories/jre' style='font-size: 115.0%'>JRE(1)</a> <a href='/blog/categories/octopress' style='font-size: 145.0%'>Octopress(3)</a> <a href='/blog/categories/profile' style='font-size: 115.0%'>profile(1)</a> <a href='/blog/categories/ubuntu' style='font-size: 160.0%'>ubuntu(4)</a> </span>
 	</div>
 </nav>
 </header>				
@@ -97,6 +98,214 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-28T21:30:08+08:00" data-updated="true" itemprop="datePublished">Nov 28<span>th</span>, 2013</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/homebrew/'>Homebrew</a>, <a class='category' href='/blog/categories/octopress/'>Octopress</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/blog/2013/11/28/setup-octopress-under-mac-os-x/" itemprop="url">Setup Octopress Under Mac OS X</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<h1>Outline</h1>
+
+<ul>
+<li>在 Mac 上建置 Octopress 環境撰寫 Blog</li>
+<li>安裝 Mac 的第三方套件庫 ( Homebrew ) 建置 Ruby 環境</li>
+</ul>
+
+
+<p></p>
+
+
+<h1>Install Homebrew &amp; Ruby</h1>
+
+<h2>Install Homebrew</h2>
+
+<p>Homebrew 是一套在 Mac OS X 下使用的套件管理工具，以往大家會使用 Mac Ports ，但是 Port 的套件相依性太深，常常會為了裝個小套件而跟著裝上一堆用不到的相依套件； Homebrew 則盡量依賴系統內已經有的套件、它的套件 formula 是用簡單的 Ruby 寫的，所以你可以 fork Homebrew repository 自行修改維護、它自己用 Git 管理自己，升級十分方便；Homebrew 安裝好套件後不會幫你做 symlink 到 /usr/local ，避免你的原生系統內還有相同的套件因而不相容而打架</p>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go/install)"</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<h2>Use Homebrew Install rbenv &amp; ruby-build</h2>
+
+<p>rbenv 是用來管理 Ruby 版本控制的工具，ruby-build 則是用來編譯安裝 Ruby</p>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>brew install rbenv ruby-build</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<h2>Add Environment Variables</h2>
+
+<p>設定 rbenv 的路徑並確保有 rbenv 工具；依照你使用的環境去設定各自的環境變數 ( zprofile / bash_profile )</p>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span>
+<span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>echo 'export RBENV_ROOT=/usr/local/var/rbenv' >> ~/.zprofile</span><span class='line command'>echo 'if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi' >> ~/.zprofile</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<blockquote><p>修改完環境變數的檔案要重新讀入環境設定檔 source ~/.zprofile</p></blockquote>
+
+<h2>Use rbenv Install Ruby &amp; Check Ruby Versions</h2>
+
+<p>利用 rbenv 安裝各版本的 Ruby ，* 顯示目前在此目錄下使用的 Ruby 版本</p>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>&nbsp;</span>
+<span class='line-number'>&nbsp;</span></pre></td><td class='code'><pre><code><span class='line command'>rbenv install 1.9.3-p448</span><span class='line command'>rbenv versions</span><span class='line output'>* system (set by /usr/local/var/rbenv/version)
+</span><span class='line output'>  1.9.3-p448</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<h2>Setting Ruby Version to Build Octopress</h2>
+
+<p>進入從 github 上 clone 下來的 Octopress 目錄中，設定要編譯 Octopress 的 Ruby 版本</p>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span>
+<span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>cd ~/Octopress</span><span class='line command'>echo '1.9.3-p448' > .ruby-version</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<h2>Restart Terminal &amp; Check Ruby Version</h2>
+
+<p>重新啟動 Terminal 並進入 Octopress 目錄下檢查當前目錄使用的 Ruby 版本</p>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span>
+<span class='line-number'>&nbsp;</span>
+<span class='line-number'>&nbsp;</span></pre></td><td class='code'><pre><code><span class='line command'>rbenv versions</span><span class='line output'>  system
+</span><span class='line output'>* 1.9.3-p448 (set by /Users/neohsu/Blog/.ruby-version)</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<h1>Setup &amp; Use Octopress</h1>
+
+<h2>Setup Octopress</h2>
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span>
+<span class='line-number'>&nbsp;</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>&nbsp;</span>
+<span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>gem install bundler</span><span class='line output'># If you use rbenv, rehash to be able to run the bundle command
+</span><span class='line command'>rbenv rehash</span><span class='line command'>bundle install</span><span class='line output'># 如果是第一次安装 Octopress ，需要先安装預設的 theme ( rake install )
+</span><span class='line command'>rake install</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<h2>Use Octopress</h2>
+
+<p></p>
+
+
+<ol>
+<li>建立文章</li>
+<li>編譯 Markdown 文章</li>
+<li>預覽</li>
+</ol>
+
+
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span>
+<span class='line-number'>&nbsp;</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>rake new_post["Zombie Ninjas Attack: A survivor's retrospective"]</span><span class='line output'># Creates source/_posts/2011-07-03-zombie-ninjas-attack-a-survivors-retrospective.markdown
+</span><span class='line command'>rake generate   # Generates posts and pages into the public directory</span><span class='line command'>rake preview    # Watches, and mounts a webserver at http://localhost:4000</span></code></pre></td></tr></table></div></div>
+        </div>
+
+
+<p>如果你的 Shell 是用 zsh 的話，上面這個指令可能會讓你出現這樣的狀況：</p>
+
+<blockquote><p>  zsh : no matches found : new_post[how-to-instala-octopresa]</p></blockquote>
+
+<p>如果遇到這個狀況的話，你可改一下你的 .zshrc ，加上這行：</p>
+
+<blockquote><p>alias rake=&ldquo;noglob rake&rdquo;</p></blockquote>
+
+<p>或是改一下原來的 rake 指令：</p>
+
+<blockquote><p>rake &ldquo;new_post[how-to-install-octopress]&rdquo;</p></blockquote>
+
+		
+		
+	</div>
+
+</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
