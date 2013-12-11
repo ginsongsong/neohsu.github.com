@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Eclipse | Learn Or Die]]></title>
+  <link href="http://NeoHsu.github.io/blog/categories/eclipse/atom.xml" rel="self"/>
+  <link href="http://NeoHsu.github.io/"/>
+  <updated>2013-12-11T17:38:14+08:00</updated>
+  <id>http://NeoHsu.github.io/</id>
+  <author>
+    <name><![CDATA[Neo Hsu]]></name>
+    <email><![CDATA[NeoHsuDroid@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Error : ADB Server Didn't ACK on Windows]]></title>
+    <link href="http://NeoHsu.github.io/blog/2013/11/28/solve-adb-server-didnt-ack-on-windows/"/>
+    <updated>2013-11-28T23:40:27+08:00</updated>
+    <id>http://NeoHsu.github.io/blog/2013/11/28/solve-adb-server-didnt-ack-on-windows</id>
+    <content type="html"><![CDATA[<h1>Outline</h1>
+
+<p>產生ADB Server didn&rsquo;t ACK 問題的主要原因為 ADB Server 的 Port 绑定失败，因此只需要關閉 Adb Server 所需綁定的 Port 上佔用的程序即可；我是在使用 Windows 系統時，自動啟動的 QQ 即時通訊軟體使 ADB Server 需綁定的 Port 被佔用，因此產生此問題</p>
+
+<p></p>
+
+
+<h2>Quit Eclipse &amp; Open Command Line</h2>
+
+<p>關閉 Eclipse 使 android 的 adb與Eclipse 間的連結關閉，並打開 commad line ，切換目錄到 Android SDK 目錄中 platform-tools 資料夾裡</p>
+
+<blockquote><p>切換到 platform-tools 資料夾中是為了使用 adb 工具，如果有有將 platform-tools 資料夾路徑加到環境變數中可以不需要切換</p></blockquote>
+
+<p><div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span>
+<span class='line-number'>&nbsp;</span></pre></td><td class='code'><pre><code><span class='line command'>D:\Application\adt-bundle-windows\sdk\platform-tools > dir</span><span class='line output'>NOTICE.txt  adb  api  fastboot  source.properties  systrace</span></code></pre></td></tr></table></div></div>
+        </div></p>
+
+<h2>Turn Off ADB Server &amp; Turn On ADB Server Again</h2>
+
+<p>關閉並重新啟動 ADB Server
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>&nbsp;</span>
+<span class='line-number'>&nbsp;</span>
+<span class='line-number'>&nbsp;</span>
+<span class='line-number'>&nbsp;</span>
+<span class='line-number'>&nbsp;</span>
+<span class='line-number'>&nbsp;</span>
+<span class='line-number'>&nbsp;</span>
+<span class='line-number'>&nbsp;</span>
+<span class='line-number'>&nbsp;</span>
+<span class='line-number'>&nbsp;</span>
+<span class='line-number'>&nbsp;</span></pre></td><td class='code'><pre><code><span class='line command'>adb kill-server</span><span class='line command'>adb start-server</p></span><span class='line output'>
+</span><span class='line output'><h1>啟動服務成功顯示畫面如下</h1>
+</span><span class='line output'>
+</span><span class='line output'><ul>
+</span><span class='line output'><li>daemon not running. starting it now on port 5037 *</li>
+</span><span class='line output'><li>daemon started successfully *
+</span><span class='line output'>
+</span><span class='line output'><h1>啟動服務失敗顯示畫面如下</h1></li>
+</span><span class='line output'><li>daemon not running. starting it now *</li>
+</span><span class='line output'><li>ADB server didn&rsquo;t ACK *</li>
+</span><span class='line output'><li>failed to start daemon *</span></code></pre></td></tr></table></div></div>
+        </div></li>
+</ul>
+
+
+<h2>IF Failed To Start ADB Server</h2>
+
+<p>如果前面步驟還沒成功啓動 ADB Server ，則需要查詢有哪些程序佔用了 ADB Server 的 port</p>
+
+<blockquote><p>ADB Server 預設Port爲5037</p></blockquote>
+
+<p><div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span>
+<span class='line-number'>&nbsp;</span>
+<span class='line-number'>&nbsp;</span>
+<span class='line-number'>&nbsp;</span>
+<span class='line-number'>&nbsp;</span>
+<span class='line-number'>&nbsp;</span>
+<span class='line-number'>&nbsp;</span></pre></td><td class='code'><pre><code><span class='line command'>netstat -ano | findstr &ldquo;5037&rdquo;</span><span class='line output'>TCP    127.0.0.1:1159         127.0.0.1:5037         ESTABLISHED     2492
+</span><span class='line output'>TCP    127.0.0.1:5037         0.0.0.0:0              LISTENING       2796
+</span><span class='line output'>TCP    127.0.0.1:5037         127.0.0.1:1159         ESTABLISHED     2796
+</span><span class='line output'>TCP    127.0.0.1:5037         127.0.0.1:1349         TIME_WAIT       0
+</span><span class='line output'>TCP    127.0.0.1:5037         127.0.0.1:1350         TIME_WAIT       0
+</span><span class='line output'>TCP    127.0.0.1:5037         127.0.0.1:1353         TIME_WAIT       0</span></code></pre></td></tr></table></div></div>
+        </div></p>
+
+<h2>Kill Task &amp; Start ADB Server</h2>
+
+<p>如果有查詢到佔用的 5037 port 的 Task，則用 taskkill 指令根據 PID 刪除它；並重新啟動 ADB Server
+<div class="window">
+          <nav class="control-window">
+            <a href="#finder" class="close" data-rel="close">close</a>
+            <a href="#" class="minimize">minimize</a>
+            <a href="#" class="deactivate">deactivate</a>
+          </nav>
+          <h1 class="titleInside">Terminal</h1>
+          <div class="container"><div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>$</span>
+<span class='line-number'>&nbsp;</span>
+<span class='line-number'>&nbsp;</span></pre></td><td class='code'><pre><code><span class='line command'>taskkill /F /PID 2796</span><span class='line command'>taskkill /F /PID 2492</span><span class='line command'>adb start-server</span><span class='line output'>* daemon not running. starting it now on port 5037 *
+</span><span class='line output'>* daemon started successfully *</span></code></pre></td></tr></table></div></div>
+        </div></p>
+]]></content>
+  </entry>
+  
+</feed>
