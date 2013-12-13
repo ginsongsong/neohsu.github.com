@@ -32,6 +32,18 @@ Move &hellip;">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
   
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-33007307-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
 
 </head>
 
@@ -67,8 +79,6 @@ Move &hellip;">
 	<div class="social">
 		
 		
-			<a class="google" href="https://plus.google.com/107267680170741990949" rel="author" title="Google+">Google+</a>
-		
 		
 		
 			<a class="github" href="https://github.com/NeoHsu" title="GitHub">GitHub</a>
@@ -85,7 +95,7 @@ Move &hellip;">
 		
 	</div>
 	<div>
-		<span id="tag-cloud"><a href='/blog/categories/android' style='font-size: 115.0%'>Android(1)</a> <a href='/blog/categories/bash' style='font-size: 115.0%'>bash(1)</a> <a href='/blog/categories/eclipse' style='font-size: 115.0%'>Eclipse(1)</a> <a href='/blog/categories/environment' style='font-size: 115.0%'>environment(1)</a> <a href='/blog/categories/homebrew' style='font-size: 115.0%'>Homebrew(1)</a> <a href='/blog/categories/java' style='font-size: 130.0%'>JAVA(2)</a> <a href='/blog/categories/jdk' style='font-size: 115.0%'>JDK(1)</a> <a href='/blog/categories/jre' style='font-size: 115.0%'>JRE(1)</a> <a href='/blog/categories/octopress' style='font-size: 145.0%'>Octopress(3)</a> <a href='/blog/categories/profile' style='font-size: 115.0%'>profile(1)</a> <a href='/blog/categories/ubuntu' style='font-size: 160.0%'>ubuntu(4)</a> </span>
+		<span id="tag-cloud"><a href='/blog/categories/android' style='font-size: 130.0%'>Android(2)</a> <a href='/blog/categories/bash' style='font-size: 115.0%'>bash(1)</a> <a href='/blog/categories/eclipse' style='font-size: 115.0%'>Eclipse(1)</a> <a href='/blog/categories/environment' style='font-size: 115.0%'>environment(1)</a> <a href='/blog/categories/homebrew' style='font-size: 115.0%'>Homebrew(1)</a> <a href='/blog/categories/java' style='font-size: 130.0%'>JAVA(2)</a> <a href='/blog/categories/jdk' style='font-size: 115.0%'>JDK(1)</a> <a href='/blog/categories/jre' style='font-size: 115.0%'>JRE(1)</a> <a href='/blog/categories/octopress' style='font-size: 145.0%'>Octopress(3)</a> <a href='/blog/categories/profile' style='font-size: 115.0%'>profile(1)</a> <a href='/blog/categories/ubuntu' style='font-size: 160.0%'>ubuntu(4)</a> </span>
 	</div>
 </nav>
 </header>				
@@ -184,6 +194,8 @@ asides/delicious.html, asides/pinboard.html, asides/googleplus.html]</code></pre
 	<div class="share">
 	<div class="addthis_toolbox addthis_default_style ">
 	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+	
 	
 	<a class="addthis_button_tweet"></a>
 	
@@ -196,6 +208,12 @@ asides/delicious.html, asides/pinboard.html, asides/googleplus.html]</code></pre
 </div>
 
 
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
 </div>
 			</div>
 			<footer id="footer" class="inner"><p>
@@ -206,7 +224,32 @@ asides/delicious.html, asides/pinboard.html, asides/googleplus.html]</code></pre
 Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a></footer>
 			
 
+<script type="text/javascript">
+      var disqus_shortname = 'learnordie-neo';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://NeoHsu.github.io/blog/2012/06/27/tag-cloud-for-octopress/';
+        var disqus_url = 'http://NeoHsu.github.io/blog/2012/06/27/tag-cloud-for-octopress/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
 
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
 
 
