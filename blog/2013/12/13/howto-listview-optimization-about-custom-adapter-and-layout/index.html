@@ -5,12 +5,11 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Environment Variable on Ubuntu - Learn Or Die</title>
+	<title>HowTo: ListView Optimization About Custom Adapter and Layout - Learn Or Die</title>
 	<meta name="author" content="Neo Hsu">
 
 	
-	<meta name="description" content="Environment Variable on Ubuntu Profile &amp; Environment Difference /etc/profile 是設定所有使用者環境變數的檔案
-/etc/environment 是設定本機系统環境變數的檔案 當進入登入畫面時，系統先取得 &hellip;">
+	<meta name="description" content="HowTo: ListView Optimization About Custom Adapter and Layout Adapter 的作用就是 ListView 與資料之间的橋樑，當 ListView 中每一個 Item 顯示到螢幕上時，都會調用 Adapter 的 getView &hellip;">
 	
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +19,7 @@
 
 	<link href="/atom.xml" rel="alternate" title="Learn Or Die" type="application/atom+xml">
 	
-	<link rel="canonical" href="http://NeoHsu.github.io/blog/2011/11/27/environment-variable-on-ubuntu/">
+	<link rel="canonical" href="http://NeoHsu.github.io/blog/2013/12/13/howto-listview-optimization-about-custom-adapter-and-layout/">
 	<link href="/favicon.png" rel="shortcut icon">
 	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
 	<link href="/stylesheets/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
@@ -109,71 +108,119 @@
 			
 			<div class="mid-col-container">
 				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-	<h1 class="title" itemprop="name">Environment Variable on Ubuntu</h1>
-	<div class="entry-content" itemprop="articleBody"><h1>Profile &amp; Environment Difference</h1>
+	<h1 class="title" itemprop="name">HowTo: ListView Optimization About Custom Adapter and Layout</h1>
+	<div class="entry-content" itemprop="articleBody"><p>Adapter 的作用就是 ListView 與資料之间的橋樑，當 ListView 中每一個 Item 顯示到螢幕上時，都會調用 Adapter 的 getView 方法返回一個View，因此當 ListView 在處理 Scroll 事件時，會反覆的調用 getView 方法去顯示頁面，使頁面不斷的重複建立相同的 View ，因此會產生記憶體不足而導致閃退或是滾動不夠順暢的狀況；由此可見我們應該要在調用 getView 方法時做些優化，以增進 ListView 的效能</p>
 
-<ul>
-<li>/etc/profile 是設定所有使用者環境變數的檔案</li>
-<li>/etc/environment 是設定本機系统環境變數的檔案</li>
-</ul>
-
-
-<p>當進入登入畫面時，系統先取得 environment 裡的環境變數執行</p>
-
-<pre><code>/etc/environment
-</code></pre>
-
-<p>當登錄系統時 shell 讀取環境變數的順序是 :</p>
-
-<pre><code>/etc/profile -&gt; /etc/environment -&gt; $HOME/.profile 
-</code></pre>
-
-<h4>如果同一個環境變數在使用者環境變數( /etc/profile )和系统環境變數( /etc/environment )有不同的值那應該以使用者的環境變數為主</h4>
-
-<p></p>
-
-
-<h1>Environment Variable Document Difference</h1>
+<p>ListView 優化的思路整理以下兩種：</p>
 
 <ol>
-<li><h4>/etc/profile :</h4>
-
-<p>此文件為系統的每個用戶設置環境信息，當用戶第一次登錄時，該文件被執行，並從 /etc/profile.d 目錄的配置文件中蒐集 shell 的設置</p></li>
-<li><h4>/etc/bashrc :</h4>
-
-<p>此文件為每一個運行 bash shell 的用戶執行此文件，當 bash shell 被打開時，該文件被讀入</p></li>
-<li><h4>~/.bash_profile :</h4>
-
-<p>每個用戶都可使用該文件輸入專用於自己使用的 shell 信息，當用戶登錄時，該文件僅僅執行一次，默認情況下，他設置一些環境變數，執行用戶的 .bashrc 文件</p></li>
-<li><h4>~/.bashrc :</h4>
-
-<p>此文件包含專用於使用者的 bash shell 的 bash 信息，當登錄時以及每次打開新的 shell 時，則該文件被讀取</p></li>
-<li><h4>~/.bash_logout :</h4>
-
-<p>當每次退出系統(退出bash shell)時，執行該文件，另外 /etc/profile 中設定的變數可以作用於任何用戶，而 ~/.bashrc 等中設定的變數只能繼承 /etc/profile 中的變數，他們是父子關係</p></li>
-<li><h4>~/.bash_profile :</h4>
-
-<p>此文件是交互式 login 方式進入 bash 運行的， ~/.bashrc 是交互式 non-login 方式進入 bash 運行的通常二者設置大致相同，所以通常前者會調用後者</p></li>
+<li>View 的重復使用：<br/>
+View 每次創建是比較耗費時間的動作，因此對於 getView 方法傳入的 converView 應該充分利用 Null 的判斷</li>
+<li>ViewHolder 的應用：<br/>
+View 在調用 findViewById 方法也是比較耗時的，因此需要考慮只調用一次，之後就調用 View.getTag 方法來取得 ViewHolder 物件</li>
 </ol>
 
 
+<h2>BaseAdapter Example</h2>
+
 <p></p>
 
 
-<h1>Conclusion</h1>
+<p>繼承 BaseAdapter 之後需要重寫四個方法：getCount，getItem，getItemId 和 getView；BaseAdapter 一開始會先調用 getCount 來計算將會顯示的 Item 數，因此我們需先回傳該值；之後 BaseAdapter 調用 getView 時，我們可以先從 converView 中確認 View 是否存在，如果未存在則建立新的 View ，反之取用之前利用 ViewHolder 保留住的 View 來操作，當指定好 Holder 後便可執行所需的配置了</p>
 
-<p>環境變數盡量不要設定在 environment 檔裡面，主要原因為 environment 檔為系統環境主要設定檔案，因此如果發生錯誤可能會造成系統死當，如果設定為所有使用者皆使用的環境變數，應設定在 profile 檔裡面，如果個別使用者要使用的環境變數則設定在 .bashrc 較為恰當</p>
+<div><script src='https://gist.github.com/7972655.js?file=ContactAdapterForBase.java'></script>
+<noscript><pre><code>public class ContactAdapter extends BaseAdapter {
+    private ArrayList&lt;String&gt; mAllPhoneNumbers = new ArrayList&lt;String&gt;();
+    private LayoutInflater mInflater;
 
-<figure class='code'><figcaption><span>Example </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>JAVA SDK 環境變數 -> /etc/profile 
-</span><span class='line'>Android SDK -> ~/.bashrc
-</span><span class='line'>Android NDK -> ~/.bashrc</span></code></pre></td></tr></table></div></figure>
+    public ContactDetailAdapter(final Context context, ArrayList&lt;String&gt; allPhoneNumbers) {
+        mInflater = LayoutInflater.from(context);
+    }
+
+    @Override
+    public int getCount() {
+        return mAllPhoneNumbers.size();
+    }
+
+    @Override
+    public Object getItem(int i) {
+        return null;
+    }
+
+    @Override
+    public long getItemId(int i) {
+        return i;
+    }
+
+    @Override
+    public View getView(int pos, View convertView, ViewGroup parent) {
+        ViewHolder holder;
+        if (convertView == null) {
+            convertView = mInflater.inflate(R.layout.contactdetail_row, parent, false);
+            holder = new ViewHolder(convertView);
+            holder.number = (TextView)view.findViewById(R.id.number);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
+        holder.number.setText(mAllPhoneNumbers.get(pos));
+        return convertView;
+    }
+    
+    private static class ViewHolder {  
+    TextView number;
+    }  
+}
+</code></pre></noscript></div>
 
 
+<h2>CursorAdapter Example</h2>
 
+<p></p>
+
+
+<p>使用 CursorAdapter 只需要重寫兩個方法：newView，bindView；CursorAdapter 和 BaseAdapter 有些許的不同，因為 BaseAdapter 主要是調用 getView 方法去建立與判斷 View 是否存在，而 CursorAdapter 有兩種方式： newView 和 bindView 可以被調用，newView 主要負責建立 View ， bindView 則是負責處理建立好的 View ，且由於 CursorAdapter 的資料是屬於動態綁定，因此對於建立好的 View 它並不會重新再建立一次，而是藉由 bindView 去對應資料與配置，與 BaseAdapter 運作方式有些許不同但實作的原理是相同的</p>
+
+<div><script src='https://gist.github.com/7972655.js?file=ContactAdapterForCursor.java'></script>
+<noscript><pre><code>class ContactAdapter extends CursorAdapter {
+  private LayoutInflater mInflater;
+  
+  public ContactAdapter(Context context, Cursor c) {
+    super(context, c);
+    mInflater = LayoutInflater.from(context);   
+  }
+
+  @Override
+  public void bindView(View view, Context context, Cursor cursor) {
+    ViewHolder holder = (ViewHolder)view.getTag();
+    holder.name.setText(cursor.getString(holder.nameIndex));
+    holder.number.setText(cursor.getString(holder.numberIndex));
+  }
+
+  @Override
+  public View newView(Context context, Cursor cursor, ViewGroup parent) {
+    View view = mInflater.inflate(R.layout.contactlist_row, parent, false);
+    ViewHolder holder = new ViewHolder();
+    holder.name = (TextView)view.findViewById(R.id.name);
+    holder.number = (TextView)view.findViewById(R.id.number);
+    holder.nameIndex = cursor.getColumnIndex(&quot;contact_name&quot;);
+    holder.numberIndex = cursor.getColumnIndex(&quot;contact_number&quot;);
+    view.setTag(holder);
+    return view;    
+  }
+
+  private static class ViewHolder {
+    int nameIndex;
+    int numberIndex;
+    TextView name;
+    TextView number;
+  }
+}</code></pre></noscript></div>
+
+
+<h2>Summary</h2>
+
+<p>增加 ListView 效能的主要方式不外乎是減少 View 的建立與重複的使用已建立過的物件；由於 CursorAdapter 屬於動態資料綁定，因此當資料做修正後，並不需要去更新 Adapter 的對應；BaseAdapter 則需更新完資料後，調用 notifyDataSetChanged 方法才能更新 ListView</p>
 </div>
 
 </article>
@@ -216,8 +263,8 @@ Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Sha
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://NeoHsu.github.io/blog/2011/11/27/environment-variable-on-ubuntu/';
-        var disqus_url = 'http://NeoHsu.github.io/blog/2011/11/27/environment-variable-on-ubuntu/';
+        var disqus_identifier = 'http://NeoHsu.github.io/blog/2013/12/13/howto-listview-optimization-about-custom-adapter-and-layout/';
+        var disqus_url = 'http://NeoHsu.github.io/blog/2013/12/13/howto-listview-optimization-about-custom-adapter-and-layout/';
         var disqus_script = 'embed.js';
       
     (function () {
