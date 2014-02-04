@@ -4,7 +4,7 @@
   <title><![CDATA[Learn Or Die]]></title>
   <link href="http://NeoHsu.github.io/atom.xml" rel="self"/>
   <link href="http://NeoHsu.github.io/"/>
-  <updated>2014-02-04T23:52:30+08:00</updated>
+  <updated>2014-02-05T00:10:15+08:00</updated>
   <id>http://NeoHsu.github.io/</id>
   <author>
     <name><![CDATA[Neo Hsu]]></name>
@@ -56,9 +56,8 @@ private class ViewHolder {
 @Override
 public View getView(int position, View convertView, ViewGroup parent) {
    // TODO Auto-generated method stub
-   ViewHolder holder = null;</p>
-
-<p>   LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+   ViewHolder holder = null;
+   LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
    if(convertView == null){
       convertView = mInflater.inflate(R.layout.list_item, null);
       holder = new ViewHolder();
@@ -68,15 +67,12 @@ public View getView(int position, View convertView, ViewGroup parent) {
       convertView.setTag(holder);
    }else{
       holder = (ViewHolder) convertView.getTag();
-   }</p>
-
-<p>   RowItem rowItem = (RowItem) getItem(position);</p>
-
-<p>   holder.txtDesc.setText(rowItem.getDesc());
+   }
+   RowItem rowItem = (RowItem) getItem(position);
+   holder.txtDesc.setText(rowItem.getDesc());
    holder.txtTitle.setText(rowItem.getTitle());
-   holder.imageView.setImageResource(rowItem.getImageId());</p>
-
-<p>   return convertView;
+   holder.imageView.setImageResource(rowItem.getImageId());
+   return convertView;
 }
 </pre></p></li>
 </ol>
