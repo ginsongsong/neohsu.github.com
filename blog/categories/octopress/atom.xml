@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | Learn Or Die]]></title>
   <link href="http://NeoHsu.github.io/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://NeoHsu.github.io/"/>
-  <updated>2013-12-15T22:47:59+08:00</updated>
+  <updated>2014-02-04T23:52:30+08:00</updated>
   <id>http://NeoHsu.github.io/</id>
   <author>
     <name><![CDATA[Neo Hsu]]></name>
@@ -249,17 +249,19 @@
 
 <ol>
 <li>編輯_config.yml<br/>
-default_asides 是設定Blog側邊欄所要放置的模板，我選擇了tag_cloud.html去作類別的顯示。</li>
+default_asides 是設定Blog側邊欄所要放置的模板，我選擇了tag_cloud.html去作類別的顯示；<br/>
+使用的模板位置 <span style="color:#F62217">custom/asides/tag_cloud.html</span></li>
 </ol>
 
 
-<pre><code>
+<pre class="prettyprint yml">
 # To add custom asides, create files in /source/_includes/custom/asides/
 and add them to the list like 'custom/asides/custom_aside_name.html'
 default_asides: 
-[<font color="#F62217">custom/asides/tag_cloud.html</font>,
+[custom/asides/tag_cloud.html,
 asides/recent_posts.html, asides/github.html, asides/twitter.html,
-asides/delicious.html, asides/pinboard.html, asides/googleplus.html]</code></pre>
+asides/delicious.html, asides/pinboard.html, asides/googleplus.html]
+</pre>
 
 
 <p></p>

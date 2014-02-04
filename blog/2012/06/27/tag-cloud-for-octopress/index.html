@@ -27,9 +27,11 @@ Move &hellip;">
 	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script src="//google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
 	<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="/stylesheets/tomorrow-night.css" rel="stylesheet" type="text/css">
 
   
 	<script type="text/javascript">
@@ -160,17 +162,19 @@ Move &hellip;">
 
 <ol>
 <li>編輯_config.yml<br/>
-default_asides 是設定Blog側邊欄所要放置的模板，我選擇了tag_cloud.html去作類別的顯示。</li>
+default_asides 是設定Blog側邊欄所要放置的模板，我選擇了tag_cloud.html去作類別的顯示；<br/>
+使用的模板位置 <span style="color:#F62217">custom/asides/tag_cloud.html</span></li>
 </ol>
 
 
-<pre><code>
+<pre class="prettyprint yml">
 # To add custom asides, create files in /source/_includes/custom/asides/
 and add them to the list like 'custom/asides/custom_aside_name.html'
 default_asides: 
-[<font color="#F62217">custom/asides/tag_cloud.html</font>,
+[custom/asides/tag_cloud.html,
 asides/recent_posts.html, asides/github.html, asides/twitter.html,
-asides/delicious.html, asides/pinboard.html, asides/googleplus.html]</code></pre>
+asides/delicious.html, asides/pinboard.html, asides/googleplus.html]
+</pre>
 
 
 <p></p>
@@ -219,7 +223,7 @@ asides/delicious.html, asides/pinboard.html, asides/googleplus.html]</code></pre
 </div>
 			</div>
 			<footer id="footer" class="inner"><p>
-  Copyright &copy; 2013 - Neo Hsu -
+  Copyright &copy; 2014 - Neo Hsu -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

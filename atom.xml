@@ -4,7 +4,7 @@
   <title><![CDATA[Learn Or Die]]></title>
   <link href="http://NeoHsu.github.io/atom.xml" rel="self"/>
   <link href="http://NeoHsu.github.io/"/>
-  <updated>2013-12-15T22:47:59+08:00</updated>
+  <updated>2014-02-04T23:52:30+08:00</updated>
   <id>http://NeoHsu.github.io/</id>
   <author>
     <name><![CDATA[Neo Hsu]]></name>
@@ -14,20 +14,11 @@
 
   
   <entry>
-    <title type="html"><![CDATA[HowTo: Put Different Items's Layouts in One ListView on Android]]></title>
-    <link href="http://NeoHsu.github.io/blog/2013/12/14/howto-put-different-itemss-layouts-in-one-listview-on-android/"/>
-    <updated>2013-12-14T22:45:44+08:00</updated>
-    <id>http://NeoHsu.github.io/blog/2013/12/14/howto-put-different-itemss-layouts-in-one-listview-on-android</id>
-    <content type="html"><![CDATA[
-]]></content>
-  </entry>
-  
-  <entry>
     <title type="html"><![CDATA[HowTo: ListView Optimization About Custom Adapter and Layout]]></title>
     <link href="http://NeoHsu.github.io/blog/2013/12/13/howto-listview-optimization-about-custom-adapter-and-layout/"/>
     <updated>2013-12-13T23:08:46+08:00</updated>
     <id>http://NeoHsu.github.io/blog/2013/12/13/howto-listview-optimization-about-custom-adapter-and-layout</id>
-    <content type="html"><![CDATA[<p>Adapter 的作用就是 ListView 與資料之间的橋樑，當 ListView 中每一個 Item 顯示到螢幕上時，都會調用 Adapter 的 getView 方法返回一個View，因此當 ListView 在處理 Scroll 事件時，會反覆的調用 getView 方法去顯示頁面，使頁面不斷的重複建立相同的 View ，因此會產生記憶體不足而導致閃退或是滾動不夠順暢的狀況；由此可見我們應該要在調用 getView 方法時做些優化，以增進 ListView 的效能</p>
+    <content type="html"><![CDATA[<p>Adapter 的作用就是 ListView 與資料之間的橋樑，當 ListView 中每一個 Item 顯示到螢幕上時，都會調用 Adapter 的 getView 方法返回一個View，因此當 ListView 在處理 Scroll 事件時，會反覆的調用 getView 方法去顯示頁面，使頁面不斷的重複建立相同的 View ，因此會產生記憶體不足而導致閃退或是滾動不夠順暢的狀況；由此可見我們應該要在調用 getView 方法時做些優化，以增進 ListView 的效能</p>
 
 <p>ListView 優化的思路整理以下兩種：</p>
 
@@ -41,56 +32,57 @@ View 在調用 findViewById 方法也是比較耗時的，因此需要考慮只�
 
 <h2>BaseAdapter Example</h2>
 
-<p></p>
+<p>繼承 BaseAdapter 之後需要重寫四個方法：getCount，getItem，getItemId 和 getView</p>
 
-
-<p>繼承 BaseAdapter 之後需要重寫四個方法：getCount，getItem，getItemId 和 getView；BaseAdapter 一開始會先調用 getCount 來計算將會顯示的 Item 數，因此我們需先回傳該值；之後 BaseAdapter 調用 getView 時，我們可以先從 converView 中確認 View 是否存在，如果未存在則建立新的 View ，反之取用之前利用 ViewHolder 保留住的 View 來操作，當指定好 Holder 後便可執行所需的配置了</p>
-
-<div><script src='https://gist.github.com/7972655.js?file=ContactAdapterForBase.java'></script>
-<noscript><pre><code>public class ContactAdapter extends BaseAdapter {
-    private ArrayList&lt;String&gt; mAllPhoneNumbers = new ArrayList&lt;String&gt;();
-    private LayoutInflater mInflater;
-
-    public ContactDetailAdapter(final Context context, ArrayList&lt;String&gt; allPhoneNumbers) {
-        mInflater = LayoutInflater.from(context);
-    }
-
-    @Override
-    public int getCount() {
-        return mAllPhoneNumbers.size();
-    }
-
-    @Override
-    public Object getItem(int i) {
-        return null;
-    }
-
-    @Override
-    public long getItemId(int i) {
-        return i;
-    }
-
-    @Override
-    public View getView(int pos, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-        if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.contactdetail_row, parent, false);
-            holder = new ViewHolder(convertView);
-            holder.number = (TextView)view.findViewById(R.id.number);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-        holder.number.setText(mAllPhoneNumbers.get(pos));
-        return convertView;
-    }
-    
-    private static class ViewHolder {  
-    TextView number;
-    }  
+<ol>
+<li><p>BaseAdapter 一開始會先調用 getCount 來計算將會顯示的 Item 數，因此我們需先回傳該值
+<pre class="prettyprint java">
+@Override
+public int getCount() {
+   // TODO Auto-generated method stub
+   return rowItems.size();
 }
-</code></pre></noscript></div>
+</pre></p></li>
+<li><p>為了反覆取用之前已建立過的 View，我們利用 ViewHolder 保存已建立的 View；這邊可以存取 Item 中所顯示的元件
+<pre class="prettyprint java">
+private class ViewHolder {
+   ImageView imageView;
+   TextView txtTitle;
+   TextView txtDesc;
+}
+</pre></p></li>
+<li><p>當 BaseAdapter 調用 getView 時，我們可以從 converView 中確認 View 是否存在，如果存在則從 ViewHolder 中取出，如果未存在則建立新的 View 並設定 tag 記錄已建立過；當指定好 Holder 後，便利用 Holder 去執行所需要的配置與相對應的事件了
+<pre class="prettyprint java">
+@Override
+public View getView(int position, View convertView, ViewGroup parent) {
+   // TODO Auto-generated method stub
+   ViewHolder holder = null;</p>
 
+<p>   LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+   if(convertView == null){
+      convertView = mInflater.inflate(R.layout.list_item, null);
+      holder = new ViewHolder();
+      holder.txtDesc = (TextView) convertView.findViewById(R.id.desc);
+      holder.txtTitle = (TextView) convertView.findViewById(R.id.title);
+      holder.imageView = (ImageView) convertView.findViewById(R.id.icon);
+      convertView.setTag(holder);
+   }else{
+      holder = (ViewHolder) convertView.getTag();
+   }</p>
+
+<p>   RowItem rowItem = (RowItem) getItem(position);</p>
+
+<p>   holder.txtDesc.setText(rowItem.getDesc());
+   holder.txtTitle.setText(rowItem.getTitle());
+   holder.imageView.setImageResource(rowItem.getImageId());</p>
+
+<p>   return convertView;
+}
+</pre></p></li>
+</ol>
+
+
+<blockquote><p>BaseAdapter 完整範例的原始碼 <a href="https://github.com/NeoHsu/CustomListViewWithBaseAdapter">GitHub &ndash; NeoHsu/CustomListViewWithBaseAdapter</a></p></blockquote>
 
 <h2>CursorAdapter Example</h2>
 
@@ -143,7 +135,7 @@ View 在調用 findViewById 方法也是比較耗時的，因此需要考慮只�
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Talk About ListView &amp; Adapter on Android]]></title>
+    <title type="html"><![CDATA[Talk About ListView Adapter on Android]]></title>
     <link href="http://NeoHsu.github.io/blog/2013/12/12/talk-about-listview-and-adapter-on-android/"/>
     <updated>2013-12-12T23:02:24+08:00</updated>
     <id>http://NeoHsu.github.io/blog/2013/12/12/talk-about-listview-and-adapter-on-android</id>
@@ -168,7 +160,7 @@ Adapter 所需要對應的資料來源，資料形態可以是字串或圖片，
 </ol>
 
 
-<p>根據上圖我們可以知道當使用 Listview 時，我們會先將要放入 ListView 的資料丟入 Adapter 中， Adapter 透過 XML 中 Layout 的佈局去配置每個 Item 的樣式與資料，最後再將配置好的佈局放入 ListView 中呈現出我們所設定的樣式；事實上系統已有預設的 Adapter 可以運用，但有時候並不能滿足我們的需求，因此要實現複雜的 ListView 可以透過繼承 Adapter 並重寫相對應的方法即可；以下將介紹一下透過不同 Adapter 的運作過程</p>
+<p>根據上圖我們可以知道當使用 ListView 時，我們會先將要放入 ListView 的資料丟入 Adapter 中， Adapter 透過 XML 中 Layout 的佈局去配置每個 Item 的樣式與資料，最後再將配置好的佈局放入 ListView 中呈現出我們所設定的樣式；事實上系統已有預設的 Adapter 可以運用，但有時候並不能滿足我們的需求，因此要實現複雜的 ListView 可以透過繼承 Adapter 並重寫相對應的方法即可；以下將介紹一下透過不同 Adapter 的運作過程</p>
 
 <p></p>
 
@@ -177,7 +169,7 @@ Adapter 所需要對應的資料來源，資料形態可以是字串或圖片，
 
 <p>我們知道如果要實作較為複雜的 ListView 需要去針對 Adapter 去做修改；以下將介紹透過不同 Adapter 去操控 ListView 的運作過程</p>
 
-<blockquote><p>BaseAdapter：通用的Adapter 讓你可以處理任何你想要的動作，但是必須做更多的編碼去處理其他對應事件</p>
+<blockquote><p>BaseAdapter：通用的Adapter 讓你可以處理任何你想要的動作，但是必須做更多的編碼去處理相對應事件</p>
 
 <p>ArrayAdapter：BaseAdapter 的擴展，它可以用在資料形態為 ArrayList 的情況</p>
 
@@ -210,13 +202,13 @@ Adapter 所需要對應的資料來源，資料形態可以是字串或圖片，
     <id>http://NeoHsu.github.io/blog/2013/12/11/talk-about-view-component-on-android</id>
     <content type="html"><![CDATA[<p><img src="http://NeoHsu.github.io/images/SVG/1-talk-about-view-component-on-android.svg"></p>
 
-<p>在 Android 開發中，我認為了解 View 的執行過程有助於提高介面呈現的效率，可以幫助一些複雜 Layout 在適當的時機中處理或是可以減少不必要的畫面重製，這些都是對於 View 的執行過程有很大的關聯</p>
+<p>在 Android 開發中，我認為了解 View 的執行過程有助於提高介面呈現的效率，可以幫助一些複雜 Layout 在適當的時機中處理，或是可以減少不必要的畫面重製，這些都是對於 View 的執行過程有很大的關聯</p>
 
-<p>Android 中 View 的呈現主要經過 Mesure, Layout 和 Draw 三個過程，以下介紹各過程處理的事情與呼叫的方法</p>
+<p>Android 中 View 的呈現主要經過 Mesure, Layout 和 Draw 這三個過程：</p>
 
 <h2>Mesure</h2>
 
-<p>此階段主要是負責計算 view 佔用的大小，簡單的說就是將 match_parent 和 wrap_content 轉成目前顯示的實際大小；透過 onMeasure(widthMeasureSpec, heightMeasureSpec) 方法去處理</p>
+<p>此階段主要是負責計算 view 佔用的大小，簡單的說就是將 match_parent 和 wrap_content 轉成目前顯示的實際大小；透過 onMeasure(widthMeasureSpec, heightMeasureSpec) 方法去處理計算 View 在目前螢幕上顯示的區塊大小</p>
 
 <blockquote><p>View 的大小是有 Parent View 和自己的大小决定而不是單一個 View 來决定，因此需要配合自己的 Sub-View 去做計算調整</p></blockquote>
 
@@ -228,7 +220,7 @@ Adapter 所需要對應的資料來源，資料形態可以是字串或圖片，
 
 <h2>Draw</h2>
 
-<p>Draw 過程中主要是先畫 Drawable 背景；需注意的是背景 Drawable 的實際大小會影響 View 的大小； Draw 過程會調用 onDraw(Canvas canvas) 方法去繪製背景，之後再透過 dispatchDraw(Canvas canvas) 方法分發給 Sub-View 進行繪製，值得注意的是 ViewGroup 在繪製時，如果它沒有背景則直接調用的是 dispatchDraw() 方法，繞過了 draw() 方法，當它有背景的時候就調用 draw() 方法，而 draw() 方法裡包含了 dispatchDraw() 方法的調用</p>
+<p>Draw 過程中主要是先畫 Drawable 背景，需注意的是背景 Drawable 的實際大小會影響 View 的大小； Draw 過程會調用 onDraw(Canvas canvas) 方法去繪製背景，之後再透過 dispatchDraw(Canvas canvas) 方法分發給 Sub-View 進行繪製，值得注意的是 ViewGroup 在繪製時，如果它沒有背景則直接調用的是 dispatchDraw() 方法，繞過了 draw() 方法，當它有背景的時候就調用 draw() 方法，而 draw() 方法裡包含了 dispatchDraw() 方法的調用</p>
 
 <blockquote><p>自定組件時通常是重寫 onDraw() 方法，而在 ViewGroup 上繪製東西的時候往往重寫的是 dispatchDraw() 方法</p></blockquote>
 
@@ -236,7 +228,7 @@ Adapter 所需要對應的資料來源，資料形態可以是字串或圖片，
 
 <p>Android 中所有畫面都是用 Canvas 根據座標去畫出來的結果，因此每次當 View 改變的時候，需要再去重新計算與繪製一個 View 來產生出畫面來</p>
 
-<p>可想而知在 ListView 中，我們不斷地 onScroll 時，如果沒做一些效能處理與緩存的處理，它的運作模式將會是不斷地重新繪製畫面；因為當每次移動 Scroll 時都會進行 getView 的動作，之後便開始一連串的 View 行為的產生</p>
+<p>可想而知在 ListView 中，我們不斷地 onScroll 時，如果沒做一些效能處理與緩存的處理，它的運作模式將會是不斷地重新繪製畫面；因為當每次移動 Scroll 時都會進行 getView 的動作，之後便開始一連串產生 View 的行為</p>
 ]]></content>
   </entry>
   
@@ -586,17 +578,19 @@ Adapter 所需要對應的資料來源，資料形態可以是字串或圖片，
 
 <ol>
 <li>編輯_config.yml<br/>
-default_asides 是設定Blog側邊欄所要放置的模板，我選擇了tag_cloud.html去作類別的顯示。</li>
+default_asides 是設定Blog側邊欄所要放置的模板，我選擇了tag_cloud.html去作類別的顯示；<br/>
+使用的模板位置 <span style="color:#F62217">custom/asides/tag_cloud.html</span></li>
 </ol>
 
 
-<pre><code>
+<pre class="prettyprint yml">
 # To add custom asides, create files in /source/_includes/custom/asides/
 and add them to the list like 'custom/asides/custom_aside_name.html'
 default_asides: 
-[<font color="#F62217">custom/asides/tag_cloud.html</font>,
+[custom/asides/tag_cloud.html,
 asides/recent_posts.html, asides/github.html, asides/twitter.html,
-asides/delicious.html, asides/pinboard.html, asides/googleplus.html]</code></pre>
+asides/delicious.html, asides/pinboard.html, asides/googleplus.html]
+</pre>
 
 
 <p></p>

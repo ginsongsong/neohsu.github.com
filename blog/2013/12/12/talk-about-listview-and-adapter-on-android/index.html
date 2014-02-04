@@ -5,11 +5,11 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Talk About ListView &amp; Adapter on Android - Learn Or Die</title>
+	<title>Talk About ListView Adapter on Android - Learn Or Die</title>
 	<meta name="author" content="Neo Hsu">
 
 	
-	<meta name="description" content="Talk About ListView &amp; Adapter on Android 在 Android 開發過程中，ListView 和 Adapter 有著密不可分的關係；Adapter 主要負責 Data 和 ListView 之間資料配置與 Layout 佈局的媒介，因此在實作 &hellip;">
+	<meta name="description" content="Talk About ListView Adapter on Android 在 Android 開發過程中，ListView 和 Adapter 有著密不可分的關係；Adapter 主要負責 Data 和 ListView 之間資料配置與 Layout 佈局的媒介，因此在實作 Custom &hellip;">
 	
 
   <!-- http://t.co/dKP3o1e -->
@@ -26,9 +26,11 @@
 	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script src="//google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
 	<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="/stylesheets/tomorrow-night.css" rel="stylesheet" type="text/css">
 
   
 	<script type="text/javascript">
@@ -108,7 +110,7 @@
 			
 			<div class="mid-col-container">
 				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-	<h1 class="title" itemprop="name">Talk About ListView &amp; Adapter on Android</h1>
+	<h1 class="title" itemprop="name">Talk About ListView Adapter on Android</h1>
 	<div class="entry-content" itemprop="articleBody"><p>在 Android 開發過程中，ListView 和 Adapter 有著密不可分的關係；Adapter 主要負責 Data 和 ListView 之間資料配置與 Layout 佈局的媒介，因此在實作 Custom ListView 時，常會針對 Adapter 組件去做客製化的設計；下面將介紹 Adapter 和 ListView 之間的運作原理並說明不同資料形態的 Adapter 運作模式</p>
 
 <p></p>
@@ -130,7 +132,7 @@ Adapter 所需要對應的資料來源，資料形態可以是字串或圖片，
 </ol>
 
 
-<p>根據上圖我們可以知道當使用 Listview 時，我們會先將要放入 ListView 的資料丟入 Adapter 中， Adapter 透過 XML 中 Layout 的佈局去配置每個 Item 的樣式與資料，最後再將配置好的佈局放入 ListView 中呈現出我們所設定的樣式；事實上系統已有預設的 Adapter 可以運用，但有時候並不能滿足我們的需求，因此要實現複雜的 ListView 可以透過繼承 Adapter 並重寫相對應的方法即可；以下將介紹一下透過不同 Adapter 的運作過程</p>
+<p>根據上圖我們可以知道當使用 ListView 時，我們會先將要放入 ListView 的資料丟入 Adapter 中， Adapter 透過 XML 中 Layout 的佈局去配置每個 Item 的樣式與資料，最後再將配置好的佈局放入 ListView 中呈現出我們所設定的樣式；事實上系統已有預設的 Adapter 可以運用，但有時候並不能滿足我們的需求，因此要實現複雜的 ListView 可以透過繼承 Adapter 並重寫相對應的方法即可；以下將介紹一下透過不同 Adapter 的運作過程</p>
 
 <p></p>
 
@@ -139,7 +141,7 @@ Adapter 所需要對應的資料來源，資料形態可以是字串或圖片，
 
 <p>我們知道如果要實作較為複雜的 ListView 需要去針對 Adapter 去做修改；以下將介紹透過不同 Adapter 去操控 ListView 的運作過程</p>
 
-<blockquote><p>BaseAdapter：通用的Adapter 讓你可以處理任何你想要的動作，但是必須做更多的編碼去處理其他對應事件</p>
+<blockquote><p>BaseAdapter：通用的Adapter 讓你可以處理任何你想要的動作，但是必須做更多的編碼去處理相對應事件</p>
 
 <p>ArrayAdapter：BaseAdapter 的擴展，它可以用在資料形態為 ArrayList 的情況</p>
 
@@ -192,7 +194,7 @@ Adapter 所需要對應的資料來源，資料形態可以是字串或圖片，
 </div>
 			</div>
 			<footer id="footer" class="inner"><p>
-  Copyright &copy; 2013 - Neo Hsu -
+  Copyright &copy; 2014 - Neo Hsu -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

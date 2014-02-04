@@ -9,7 +9,7 @@
 	<meta name="author" content="Neo Hsu">
 
 	
-	<meta name="description" content="HowTo: ListView Optimization About Custom Adapter and Layout Adapter 的作用就是 ListView 與資料之间的橋樑，當 ListView 中每一個 Item 顯示到螢幕上時，都會調用 Adapter 的 getView &hellip;">
+	<meta name="description" content="HowTo: ListView Optimization About Custom Adapter and Layout Adapter 的作用就是 ListView 與資料之間的橋樑，當 ListView 中每一個 Item 顯示到螢幕上時，都會調用 Adapter 的 getView &hellip;">
 	
 
   <!-- http://t.co/dKP3o1e -->
@@ -26,9 +26,11 @@
 	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script src="//google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
 	<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="/stylesheets/tomorrow-night.css" rel="stylesheet" type="text/css">
 
   
 	<script type="text/javascript">
@@ -109,7 +111,7 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 	<h1 class="title" itemprop="name">HowTo: ListView Optimization About Custom Adapter and Layout</h1>
-	<div class="entry-content" itemprop="articleBody"><p>Adapter 的作用就是 ListView 與資料之间的橋樑，當 ListView 中每一個 Item 顯示到螢幕上時，都會調用 Adapter 的 getView 方法返回一個View，因此當 ListView 在處理 Scroll 事件時，會反覆的調用 getView 方法去顯示頁面，使頁面不斷的重複建立相同的 View ，因此會產生記憶體不足而導致閃退或是滾動不夠順暢的狀況；由此可見我們應該要在調用 getView 方法時做些優化，以增進 ListView 的效能</p>
+	<div class="entry-content" itemprop="articleBody"><p>Adapter 的作用就是 ListView 與資料之間的橋樑，當 ListView 中每一個 Item 顯示到螢幕上時，都會調用 Adapter 的 getView 方法返回一個View，因此當 ListView 在處理 Scroll 事件時，會反覆的調用 getView 方法去顯示頁面，使頁面不斷的重複建立相同的 View ，因此會產生記憶體不足而導致閃退或是滾動不夠順暢的狀況；由此可見我們應該要在調用 getView 方法時做些優化，以增進 ListView 的效能</p>
 
 <p>ListView 優化的思路整理以下兩種：</p>
 
@@ -123,56 +125,57 @@ View 在調用 findViewById 方法也是比較耗時的，因此需要考慮只�
 
 <h2>BaseAdapter Example</h2>
 
-<p></p>
+<p>繼承 BaseAdapter 之後需要重寫四個方法：getCount，getItem，getItemId 和 getView</p>
 
-
-<p>繼承 BaseAdapter 之後需要重寫四個方法：getCount，getItem，getItemId 和 getView；BaseAdapter 一開始會先調用 getCount 來計算將會顯示的 Item 數，因此我們需先回傳該值；之後 BaseAdapter 調用 getView 時，我們可以先從 converView 中確認 View 是否存在，如果未存在則建立新的 View ，反之取用之前利用 ViewHolder 保留住的 View 來操作，當指定好 Holder 後便可執行所需的配置了</p>
-
-<div><script src='https://gist.github.com/7972655.js?file=ContactAdapterForBase.java'></script>
-<noscript><pre><code>public class ContactAdapter extends BaseAdapter {
-    private ArrayList&lt;String&gt; mAllPhoneNumbers = new ArrayList&lt;String&gt;();
-    private LayoutInflater mInflater;
-
-    public ContactDetailAdapter(final Context context, ArrayList&lt;String&gt; allPhoneNumbers) {
-        mInflater = LayoutInflater.from(context);
-    }
-
-    @Override
-    public int getCount() {
-        return mAllPhoneNumbers.size();
-    }
-
-    @Override
-    public Object getItem(int i) {
-        return null;
-    }
-
-    @Override
-    public long getItemId(int i) {
-        return i;
-    }
-
-    @Override
-    public View getView(int pos, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-        if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.contactdetail_row, parent, false);
-            holder = new ViewHolder(convertView);
-            holder.number = (TextView)view.findViewById(R.id.number);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-        holder.number.setText(mAllPhoneNumbers.get(pos));
-        return convertView;
-    }
-    
-    private static class ViewHolder {  
-    TextView number;
-    }  
+<ol>
+<li><p>BaseAdapter 一開始會先調用 getCount 來計算將會顯示的 Item 數，因此我們需先回傳該值
+<pre class="prettyprint java">
+@Override
+public int getCount() {
+   // TODO Auto-generated method stub
+   return rowItems.size();
 }
-</code></pre></noscript></div>
+</pre></p></li>
+<li><p>為了反覆取用之前已建立過的 View，我們利用 ViewHolder 保存已建立的 View；這邊可以存取 Item 中所顯示的元件
+<pre class="prettyprint java">
+private class ViewHolder {
+   ImageView imageView;
+   TextView txtTitle;
+   TextView txtDesc;
+}
+</pre></p></li>
+<li><p>當 BaseAdapter 調用 getView 時，我們可以從 converView 中確認 View 是否存在，如果存在則從 ViewHolder 中取出，如果未存在則建立新的 View 並設定 tag 記錄已建立過；當指定好 Holder 後，便利用 Holder 去執行所需要的配置與相對應的事件了
+<pre class="prettyprint java">
+@Override
+public View getView(int position, View convertView, ViewGroup parent) {
+   // TODO Auto-generated method stub
+   ViewHolder holder = null;</p>
 
+<p>   LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+   if(convertView == null){
+      convertView = mInflater.inflate(R.layout.list_item, null);
+      holder = new ViewHolder();
+      holder.txtDesc = (TextView) convertView.findViewById(R.id.desc);
+      holder.txtTitle = (TextView) convertView.findViewById(R.id.title);
+      holder.imageView = (ImageView) convertView.findViewById(R.id.icon);
+      convertView.setTag(holder);
+   }else{
+      holder = (ViewHolder) convertView.getTag();
+   }</p>
+
+<p>   RowItem rowItem = (RowItem) getItem(position);</p>
+
+<p>   holder.txtDesc.setText(rowItem.getDesc());
+   holder.txtTitle.setText(rowItem.getTitle());
+   holder.imageView.setImageResource(rowItem.getImageId());</p>
+
+<p>   return convertView;
+}
+</pre></p></li>
+</ol>
+
+
+<blockquote><p>BaseAdapter 完整範例的原始碼 <a href="https://github.com/NeoHsu/CustomListViewWithBaseAdapter">GitHub &ndash; NeoHsu/CustomListViewWithBaseAdapter</a></p></blockquote>
 
 <h2>CursorAdapter Example</h2>
 
@@ -251,7 +254,7 @@ View 在調用 findViewById 方法也是比較耗時的，因此需要考慮只�
 </div>
 			</div>
 			<footer id="footer" class="inner"><p>
-  Copyright &copy; 2013 - Neo Hsu -
+  Copyright &copy; 2014 - Neo Hsu -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
